@@ -1,0 +1,804 @@
+use strict';
+
+function BinarioADecimal(num) {
+var decimal = 0;
+const pasandoADecimal = num.split("").reverse();
+for(var i = 0;i < pasandoADecimal.length; i++){
+var resultado= parseInt(pasandoADecimal[i]);
+var calculo= Math.pow(2, i);
+decimal += resultado * calculo;
+} return decimal;
+
+ } 
+
+/* Escribe una función que reciba por parámetro un número en base 
+decimal y retorne el mismo número en base binaria. 
+El valor retornado debe ser de tipo string.*/
+function DecimalABinario(num) {
+   if(num === 0) {
+      return "0";
+   }
+   var binario = "";
+   while(num > 0) {
+   var resto = num % 2;
+   binario = resto + binario;
+   num = Math.floor(num/2);
+
+}
+return binario; 
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x = 1;                               
+var a = 5;
+var b = 10;
+var c = function (a, b, c) { 
+   var x = 10;
+   console.log(x); // 10
+   console.log(a); // 8
+   var f = function (a, b, c) {
+      b = a;
+      console.log(b); //8
+      b = c;
+      var x = 5;
+   };
+   
+ f(a, b, c);
+   console.log(b); //9
+};
+c(8, 9, 10);
+console.log(b); //10
+console.log(x); // 1
+
+/////////////////////////////////////
+
+
+console.log(bar);  // undefine
+console.log(baz); // error, porque no esta declarada la ariable con var, por lo que no se realiza hoisting.
+foo(); // hola // porque la variable esta declarada, no es una expresion.
+function foo() {
+   console.log('Hola!'); 
+}
+var bar = 1;
+baz = 2;
+
+////////////
+var instructor = 'Tony';
+if (true) {
+   var instructor = 'Franco';
+}
+console.log(instructor); // Franco como es un condicional if y es un true, convierte el valor 
+  //////////////
+  var instructor = 'Tony';
+console.log(instructor); // tony
+(function () {
+   if (true) {
+      var instructor = 'Franco';
+      console.log(instructor); // franco
+   }
+})();
+console.log(instructor); // tony
+//////////////
+var instructor = 'Tony';
+let pm = 'Franco';
+if (true) {
+   var instructor = 'The Flash';
+   let pm = 'Reverse Flash';
+   console.log(instructor); // the flash
+   console.log(pm); // reverse flash
+}
+console.log(instructor); /// flash // var no esta limitado por el scope de bloque
+console.log(pm); /// franco
+//////////////////////
+
+
+6 / "3" // 2 
+"2" * "3" // 6
+4 + 5 + "px" // 9px
+"$" + 4 + 5 // $45
+"4" - 2 // 2
+"4px" - 2 // NaN
+7 / 0 // infinity 
+{}[0] // undefine
+parseInt("09") // 9
+5 && 2 // 2
+2 && 5 // 5
+5 || 0 // 5 
+0 || 5 // 5 // por que 0 es un valor false 
+[3]+[3]-[10]// 23, porque los primeros valores del array se concatenan.
+3>2>1 // true > 1 = false
+[] == ![]// true
+
+////////////////////////////
+function test() {
+   console.log(a);// undefine
+   console.log(foo()); //  2
+
+   var a = 1;
+   function foo() {
+      return 2;
+   }
+}
+test(); 
+
+
+/////////////////////////////////
+
+var snack = 'Meow Mix';
+
+function getFood(food) {
+   if (food) {
+      var snack = 'Friskies';
+      return snack;
+   }
+   return snack;
+}
+
+getFood(false); // undefine porque la funcion recibe como valor false.
+//////////////////////////////////////////
+
+
+var fullname = 'Juan Perez';
+var obj = {
+   fullname: 'Natalia Nerea',
+   prop: {
+      fullname: 'Aurelio De Rosa',
+      getFullname: function () {
+         return this.fullname; 
+      },
+   },
+};
+
+console.log(obj.prop.getFullname()); // aurelio de rosa
+
+var test = obj.prop.getFullname; 
+
+console.log(test()); // undefine
+////////////////////////////////////////
+
+function printing() {
+   console.log(1); // 1
+   setTimeout(function () {
+      console.log(2); // 
+   }, 1000);
+   setTimeout(function () {
+      console.log(3);
+   }, 0);
+   console.log(4);
+}
+
+printing(); // 1 // 4// 3 //2
+///////////////////////////////////////////////////////////////////////
+
+
+'use strict';
+
+// Closures
+
+/* Ejercicio 1
+La función counter debe retornar otra función. Esta función retornada debe actuar como un contador, retornando 
+un valor numérico que empieza en 1 e incrementa con cada invocación.
+EJEMPLO
+const nuevoContador = counter()
+nuevoContador()     // 1
+nuevoContador()     // 2
+
+const otroContador = counter()
+otroContador()      // 1
+otroContador()      // 2 */
+function counter() {
+  let count = 1;
+
+  return function () {
+    return count++;
+  };
+}
+
+const newcount = counter();
+console.log(newcount()); // Esto imprimirá 0
+console.log(newcount()); // Esto imprimirá 1
+console.log(newcount()); // Esto imprimirá 2
+// Y así sucesivamente, cada vez que llames a newcount() se incrementará el contador
+
+
+/* Ejercicio 2
+Tu tarea aquí es lograr, mediante un closure, que cacheFunction actúe como una memoria caché para el callback 
+que recibe por parámetro (cb); es decir, que "recuerde" el resultado de cada operación que hace, de manera que, 
+al realizar una operación por segunda vez, se pueda obtener el resultado de esa "memoria" sin tener que efectuar 
+otra vez cálculos que ya se hicieron anteriormente.
+
+- cacheFunction debe retornar una función. Esta función debe aceptar un argumento (arg) e invocar a cb con ese argumento; 
+hecho eso, debe guardar el argumento junto con el resultado de la invocación (tip: usá un objeto donde cada propiedad sea
+   el argumento, y su valor el resultado de la correspondiente invocación a cb) de manera que, la próxima vez que reciba 
+   el mismo argumento, no sea necesario volver a invocar a cb, porque el resultado estará guardado en la "memoria caché".
+
+  Ejemplo:
+  function square(n){
+    return n * n
+  }
+
+  const squareCache = cacheFunction(square)
+
+  squareCache(5)    // invocará a square(5), almacenará el resultado y lo retornará
+  squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) */
+
+function cacheFunction(cb) {
+   
+    const cache = {};
+    return function (arg) {
+      if (cache.hasOwnProperty(arg)) {
+        return cache[arg];  
+      } else {
+        const result = cb(arg); 
+        cache[arg] = result; 
+        return result;
+      }
+    };
+  }
+  
+  
+//----------------------------------------
+
+// Bind
+
+var instructor = {
+   nombre: 'Franco',
+   edad: 25,
+};
+
+var alumno = {
+   nombre: 'Juan',
+   curso: 'FullStack',
+};
+
+function getNombre() {
+  return this.nombre;}
+  
+  
+
+/*
+  Ejercicio 3
+  IMPORTANTE: no modificar el código de arriba (variables instructor y alumno, y función getNombre)
+  Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
+*/
+
+let getNombreInstructor = getNombre.bind(instructor);
+let getNombreAlumno = getNombre.bind(alumno);
+console.log (getNombreInstructor());
+console.log (getNombreAlumno());
+
+
+/*
+  Ejercicio 4
+  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+*/
+
+function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
+    return delimitadorIzquierda + cadena + delimitadorDerecha;
+}
+
+let textoAsteriscos = crearCadena.bind(null,"*","*");
+let textoGuiones = crearCadena.bind(null, "-", "-");
+let textoUnderscore = crearCadena.bind(null, "_", "_");
+
+// No modifiquen nada debajo de esta linea
+// --------------------------------
+
+module.exports = {
+   counter,
+   cacheFunction,
+   getNombreInstructor,
+   getNombreAlumno,
+   textoAsteriscos,
+   textoGuiones,
+   textoUnderscore,
+};
+/////////////////////////////////////////////////////////////////
+
+
+
+'use strict';
+
+/*
+Definir las funciones recursivas nFactorial y nFibonacci.
+
+nFactorial(n) debe retornar el factorial de n sabiendo que, siendo n un número natural, 
+su factorial (representado como n!) es el producto de n por todos los números naturales menores que él y mayores a 0. 
+Ejemplo: 5! = 5 * 4 * 3 * 2 * 1
+
+nFibonacci(n) debe retornar el enésimo número de la secuencia de Fibonacci, tomando al 0 y al 1, respectivamente, 
+como primer y segundo elementos de la misma, y sabiendo que cualquier elemento que se agregue a esta secuencia será el 
+resultado de la suma del último elemento y el anterior.
+Ejemplo: nFibonacci(7) retornará 13, ya que 13 es el dígito que está en la posición 7 de la secuencia.
+
+Secuencia:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ... 
+
+
+Como ejercicio adicional y completamente opcional, al terminar de resolver este problema pueden intentar 
+definir funciones que logren los mismos resultados pero de manera iterativa.
+*/
+
+function nFactorial(n) {
+    if (n==0 || n==1 ) {
+      return 1; 
+    } else { return n * nFactorial(n-1);}
+    
+    
+  } 
+
+    
+
+
+function nFibonacci(n) {
+  if (n==0){
+  return 0;
+} else if (n==1) 
+return 1;
+ else {
+    return nFibonacci(n - 1) + nFibonacci(n - 2);
+  }
+}
+
+
+
+/*
+Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa 
+es el primero que se quita. Definir los siguientes métodos:
+  - enqueue: agrega un valor respetando el orden.
+  - dequeue: remueve un valor respetando el orden. Retorna undefined cuando la queue está vacía.
+  - size: retorna el tamaño (cantidad de elementos) de la queue.
+
+Pueden utilizar class o función constructora.
+*/
+
+function Queue() {// funcion cola
+  this.lista = [];// clase lista vacia
+}
+
+Queue.prototype.enqueue = function(elemento) {// se agrega un elemento a lista, se realiza por metodo push, y el metodo creado en enqueue
+  this.lista.push(elemento);
+};
+
+Queue.prototype.dequeue = function() {// se crea metodo dequeue se quita el ultimo elemnto agregado, y verifica si hay elementos en caso de no haber retorna undefine
+  if (this.isEmpty()) {
+    return undefined;
+  }
+  return this.lista.shift();
+};
+
+Queue.prototype.size = function() {// crea metodo size, devuelve la cantidad de elementos que poseemos en la lista
+  return this.lista.length;
+};
+
+Queue.prototype.isEmpty = function() {// crea el metodo isEmpty verifica la longitud de la lista.
+  return this.lista.length === 0;
+};
+
+  
+
+
+
+  
+
+
+/*⚠️ No modificar nada debajo de esta línea ⚠️*/
+module.exports = {
+   Queue,
+   nFactorial,
+   nFibonacci,
+};
+///////////////////////////////////////////////////////////////
+'use strict';
+
+/* EJERCICIO 1
+Implementar la clase LinkedList, definiendo los siguientes métodos:
+  - add: agrega un nuevo nodo al final de la lista;
+  - remove: elimina el último nodo de la lista y 
+  retorna su valor (tener en cuenta el caso particular de una lista de un 
+    solo nodo y de una lista vacía);
+  - search: recibe un parámetro y lo busca dentro de la lista, con una particularidad: el parámetro puede ser un valor o un callback. En el primer caso, buscamos un nodo cuyo valor coincida con lo buscado; en el segundo, buscamos un nodo cuyo valor, al ser pasado como parámetro del callback, retorne true. 
+  EJEMPLO 
+  search(3) busca un nodo cuyo valor sea 3;
+  search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
+  En caso de que la búsqueda no arroje resultados, search debe retornar null.
+*/
+// Definición de la clase LinkedList
+function LinkedList() {
+  this.head = null; // La cabeza de la lista, inicialmente nula.
+}
+
+// Definición de la clase Node
+function Node(value) {
+  this.value = value; // El valor almacenado en el nodo.
+  this.next = null;   // Referencia al siguiente nodo, inicialmente nula.
+}
+
+// Método para agregar un nodo al final de la lista
+LinkedList.prototype.add = function(value) {
+  var node = new Node(value); // Crear un nuevo nodo con el valor proporcionado.
+  if (!this.head) // Si la lista está vacía,
+    this.head = node; // El nuevo nodo se convierte en la cabeza de la lista.
+  else {
+    var current = this.head; // Iniciar desde la cabeza.
+    while (current.next) {
+      current = current.next; // Avanzar al siguiente nodo en la lista.
+    }
+    current.next = node; // Agregar el nuevo nodo al final.
+  }
+};
+
+// Método para eliminar el último nodo de la lista y retornar su valor
+LinkedList.prototype.remove = function() {
+  if (!this.head) // Si la lista está vacía,
+    return null; // No hay nada que eliminar, se retorna null.
+  var current = this.head; // Comenzar desde la cabeza.
+  var prev = null; // Mantener un registro del nodo anterior.
+
+  while (current.next) {
+    prev = current; // Actualizar el nodo anterior.
+    current = current.next; // Avanzar al siguiente nodo.
+  }
+
+  if (prev) { // Si hay un nodo anterior (no es el primer nodo),
+    prev.next = null; // Eliminar la referencia al último nodo.
+    return current.value; // Retornar el valor del nodo eliminado.
+  } else { // Si no hay nodo anterior (solo hay un nodo en la lista),
+    var value = this.head.value; // Almacenar el valor del único nodo.
+    this.head = null; // Eliminar el único nodo.
+    return value; // Retornar el valor del nodo eliminado.
+  }
+};
+
+// Método para buscar un valor o ejecutar una función de búsqueda en la lista
+LinkedList.prototype.search = function(arg) {
+  var current = this.head; // Comenzar desde la cabeza.
+  while (current) { // Mientras haya nodos en la lista,
+    if (typeof arg === "function") { // Si el argumento es una función,
+      if (arg(current.value)) // Si la función retorna true para el valor actual,
+        return current.value; // Retornar el valor del nodo actual.
+    } else { // Si el argumento no es una función (es un valor específico),
+      if (current.value === arg) // Si el valor actual coincide con el argumento,
+        return current.value; // Retornar el valor del nodo actual.
+    }
+    current = current.next; // Avanzar al siguiente nodo.
+  }
+  return null; // Si no se encuentra el valor, retornar null.
+};
+
+var list = new LinkedList();
+
+
+
+
+
+/* EJERCICIO 2
+Implementar la clase HashTable.
+Nuetra tabla hash, internamente, consta de un arreglo de buckets (slots, contenedores, o casilleros; es decir, posiciones 
+  posibles para almacenar la información), donde guardaremos datos en formato clave-valor (por ejemplo, {instructora: 'Ani'}).
+Para este ejercicio, la tabla debe tener 35 buckets (numBuckets = 35). (Luego de haber pasado todos los tests, 
+  a modo de ejercicio adicional, pueden modificar un poco la clase para que reciba la cantidad de buckets por parámetro 
+  al momento de ser instanciada.)
+
+La clase debe tener los siguientes métodos:
+  - hash: función hasheadora que determina en qué bucket se almacenará un dato. Recibe un input alfabético, suma el código numérico de cada caracter del input (investigar el método charCodeAt de los strings) y calcula el módulo de ese número total por la cantidad de buckets; de esta manera determina la posición de la tabla en la que se almacenará el dato.
+  - set: recibe el conjunto clave valor (como dos parámetros distintos), hashea la clave invocando al método hash, y almacena todo el conjunto en el bucket correcto.
+  - get: recibe una clave por parámetro, y busca el valor que le corresponde en el bucket correcto de la tabla.
+  - hasKey: recibe una clave por parámetro y consulta si ya hay algo almacenado en la tabla con esa clave (retorna un booleano).
+
+Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
+*/
+// Definición de la clase HashTable
+function HashTable() {
+  this.bucket = []; // Array que almacena los buckets (contenedores).
+  this.numBuckets = 35; // Número total de buckets en la tabla.
+}
+
+// Función hash que calcula el índice del bucket para una clave dada.
+HashTable.prototype.hash = function(key) {
+  var hash = 0;
+  for (var i = 0; i < key.length; i++) {
+    hash += key.charCodeAt(i); // Suma del valor ASCII de los caracteres de la clave.
+  }
+  return hash % this.numBuckets; // Cálculo del índice del bucket usando el módulo.
+};
+
+// Método para almacenar un par clave-valor en la tabla hash.
+HashTable.prototype.set = function(key, value) {
+  if (typeof key !== "string") // Verificación si la clave es un string.
+    throw new TypeError("keys must be strings"); // Lanzar un error si no es un string.
+  var index = this.hash(key); // Obtener el índice del bucket para la clave.
+  if (!this.bucket[index]) this.bucket[index] = {}; // Crear un objeto en el bucket si no existe.
+  this.bucket[index][key] = value; // Almacenar el valor en el objeto del bucket.
+};
+
+// Método para obtener el valor asociado a una clave en la tabla hash.
+HashTable.prototype.get = function(key) {
+  var index = this.hash(key); // Obtener el índice del bucket para la clave.
+  return this.bucket[index][key]; // Retornar el valor asociado a la clave.
+};
+
+// Método para verificar si una clave ya existe en la tabla hash.
+HashTable.prototype.hasKey = function(key) {
+  var index = this.hash(key); // Obtener el índice del bucket para la clave.
+  return this.bucket[index].hasOwnProperty(key); // Retornar true si la clave existe, y false si no.
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+'use strict';
+
+/*
+ Implementar la clase BinarySearchTree, definiendo los siguientes métodos recursivos:
+  - size: retorna la cantidad total de nodos del árbol
+  - insert: agrega un nodo en el lugar correspondiente
+  - contains: retorna true o false luego de evaluar si cierto valor existe dentro del árbol
+  - depthFirstForEach: recorre el árbol siguiendo el orden depth first (DFS) en cualquiera de sus variantes, según se indique por parámetro ("post-order", "pre-order", o "in-order"). Nota: si no se provee ningún parámetro, hará el recorrido "in-order" por defecto.
+  - breadthFirstForEach: recorre el árbol siguiendo el orden breadth first (BFS)
+  El ábrol utilizado para hacer los tests se encuentra representado en la imagen bst.png dentro del directorio homework.
+*/
+// Definición de la clase BinarySearchTree
+function BinarySearchTree(value) {
+   this.value = value; // Asigna el valor al nodo actual
+   this.left = null; // Inicializa el nodo izquierdo como nulo
+   this.right = null; // Inicializa el nodo derecho como nulo
+}
+
+// Método para insertar un nuevo valor en el árbol
+BinarySearchTree.prototype.insert = function(value) {
+   if (value < this.value) { // Si el valor es menor que el valor actual
+      if (this.left) { // Si existe un nodo izquierdo
+         this.left.insert(value); // Realiza una inserción recursiva en el nodo izquierdo
+      } else {
+         this.left = new BinarySearchTree(value); // Crea un nuevo nodo izquierdo con el valor
+      }
+   } else { // Si el valor es mayor o igual al valor actual
+      if (this.right) { // Si existe un nodo derecho
+         this.right.insert(value); // Realiza una inserción recursiva en el nodo derecho
+      } else {
+         this.right = new BinarySearchTree(value); // Crea un nuevo nodo derecho con el valor
+      }
+   }
+};
+
+// Método para calcular el tamaño total del árbol
+BinarySearchTree.prototype.size = function() {
+   if (this.right === null && this.left === null) return 1; // Si no hay nodos a la izquierda ni a la derecha, retorna 1
+   if (this.left !== null && this.right !== null) return 1 + this.left.size() + this.right.size(); // Si hay nodos en ambas ramas, suma los tamaños
+   if (this.left === null && this.right !== null) return 1 + this.right.size(); // Si no hay nodo a la izquierda, suma solo el tamaño de la derecha
+   if (this.left !== null && this.right === null) return 1 + this.left.size(); // Si no hay nodo a la derecha, suma solo el tamaño de la izquierda
+};
+
+// Método para verificar si un valor dado existe en el árbol
+BinarySearchTree.prototype.contains = function(value) {
+   if (this.value === value) return true; // Si el valor del nodo actual es igual al valor buscado, retorna verdadero
+   if (value > this.value) { // Si el valor buscado es mayor al valor del nodo actual
+      if (this.right === null) return false; // Si no hay nodo a la derecha, retorna falso
+      return this.right.contains(value); // Realiza búsqueda recursiva en el nodo derecho
+   } 
+   if (value < this.value) { // Si el valor buscado es menor al valor del nodo actual
+      if (this.left === null) return false; // Si no hay nodo a la izquierda, retorna falso
+      return this.left.contains(value); // Realiza búsqueda recursiva en el nodo izquierdo
+   }
+};
+
+// Método para recorrer el árbol en profundidad (DFS) según el pedido especificado
+BinarySearchTree.prototype.depthFirstForEach = function(cb, pedido = "in-order") {
+   if (pedido === "in-order" || pedido === undefined) { // Recorrido en orden "in-order"
+      if (this.left) this.left.depthFirstForEach(cb, pedido); // Recorre el nodo izquierdo recursivamente
+      cb(this.value); // Ejecuta la función de callback en el nodo actual
+      if (this.right) this.right.depthFirstForEach(cb, pedido); // Recorre el nodo derecho recursivamente
+   } 
+   
+   if (pedido === "pre-order") { // Recorrido en orden "pre-order"
+      cb(this.value); // Ejecuta la función de callback en el nodo actual
+      if (this.left) this.left.depthFirstForEach(cb, pedido); // Recorre el nodo izquierdo recursivamente
+      if (this.right) this.right.depthFirstForEach(cb, pedido); // Recorre el nodo derecho recursivamente
+   }
+   
+   if (pedido === "post-order") { // Recorrido en orden "post-order"
+      if (this.left) this.left.depthFirstForEach(cb, pedido); // Recorre el nodo izquierdo recursivamente
+      if (this.right) this.right.depthFirstForEach(cb, pedido); // Recorre el nodo derecho recursivamente
+      cb(this.value); // Ejecuta la función de callback en el nodo actual
+   }
+};
+
+// Método para recorrer el árbol en amplitud (BFS)
+BinarySearchTree.prototype.breadthFirstForEach = function(cb, arr = []) {
+   if (this.left !== null) { // Si hay nodo a la izquierda, agrégalo al arreglo
+      arr.push(this.left);
+   }
+   if (this.right !== null) { // Si hay nodo a la derecha, agrégalo al arreglo
+      arr.push(this.right);
+   }
+   cb(this.value); // Ejecuta la función de callback en el nodo actual
+   if (arr.length > 0) { // Si hay nodos en el arreglo, continúa con el siguiente nodo
+      arr.shift().breadthFirstForEach(cb, arr);
+   }
+};
+
+
+
+
+
+// No modifiquen nada debajo de esta linea
+// --------------------------------
+
+module.exports = {
+   BinarySearchTree,
+};
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+'use strict'
+// No cambies los nombres de las funciones.
+function factorear(num) {
+  var factors = [1]; // Inicializa un array con el valor 1, ya que todo número es divisible por 1
+  var x = 2; // Inicializa el divisor en 2
+  while (num > 1) { // Mientras el número sea mayor que 1
+    if (num % x === 0) { // Si el número es divisible por x
+      factors.push(x); // Agrega x como factor
+      num = num / x; // Divide el número por x
+    } else {
+      x++; // Si no es divisible, incrementa x
+    }
+  }
+  return factors; // Devuelve el array con los factores primos
+}
+
+function bubbleSort(array) {
+  for (var i = 0; i < array.length; i++) { // Recorre el array desde el principio
+    for (var j = i + 1; j < array.length; j++) { // Recorre el array desde el siguiente elemento
+      if (array[i] > array[j]) { // Compara el elemento en la posición i con el elemento en la posición j
+        var aux = array[i]; // Intercambia los valores utilizando una variable auxiliar
+        array[i] = array[j];
+        array[j] = aux;
+      }
+    }
+  }
+  return array; // Devuelve el array ordenado
+}
+
+function insertionSort(array) {
+  for (var i = 1; i < array.length; i++) { // Comienza en el segundo elemento
+    var j = i - 1; // Inicializa j una posición atrás de i
+    var aux = array[i]; // Guarda el valor del elemento en la posición i
+    while (j >= 0 && aux < array[j]) { // Compara y desplaza los elementos mayores hacia adelante
+      array[j + 1] = array[j];
+      j--;
+    }
+    array[j + 1] = aux; // Inserta el elemento en la posición correcta
+  }
+  return array; // Devuelve el array ordenado
+}
+
+function selectionSort(array) {
+  for (var i = 0; i < array.length; i++) { // Recorre el array desde el principio
+    var min = i; // Inicializa el índice del elemento mínimo
+    for (var j = i + 1; j < array.length; j++) { // Recorre el array desde el siguiente elemento
+      if (array[j] < array[min]) { // Encuentra el índice del elemento mínimo
+        min = j;
+      }
+    }
+    if (i !== min) { // Si el índice del elemento mínimo es distinto al de i
+      var aux = array[i]; // Intercambia los valores utilizando una variable auxiliar
+      array[i] = array[min];
+      array[min] = aux;
+    }
+  }
+  return array; // Devuelve el array ordenado
+}
+
+
+
+// No modificar nada debajo de esta línea
+// --------------------------------
+
+module.exports = {
+  factorear,
+  bubbleSort,
+  insertionSort,
+  selectionSort,
+};
+////////////////////////////////////////////////////////////////////////////////
+
+
+'use strict'
+// No cambies los nombres de las funciones.
+
+function quickSort(array) {
+  // Implementar el método conocido como quickSort para ordenar de menor a mayor
+  // el array recibido como parámetro
+  // Devolver el array ordenado resultante
+  // Tu código:
+
+ // Si el array tiene 0 o 1 elementos, está automáticamente ordenado
+ if (array.length <= 1) {
+  return array;
+}
+
+var pivot = array[0]; // Elegimos el primer elemento como pivote
+var left = [];
+var right = [];
+
+// Recorremos los elementos a partir del segundo
+for (var i = 1; i < array.length; i++) {
+  if (array[i] < pivot) {
+    left.push(array[i]); // Elementos menores que el pivote van al array izquierdo
+  } else {
+    right.push(array[i]); // Elementos mayores que el pivote van al array derecho
+  }
+}
+
+// Ordenamos recursivamente los subarrays izquierdo y derecho
+// y luego concatenamos los resultados junto con el pivote
+return quickSort(left).concat(pivot, quickSort(right));
+
+}
+s
+function mergeSort(array) {
+  // Implementar el método conocido como mergeSort para ordenar de menor a mayor
+  // el array recibido como parámetro
+  // Devolver el array ordenado resultante
+  // Tu código:
+
+  // Caso base: si el array tiene 0 o 1 elementos, está automáticamente ordenado
+  if (array.length <= 1) {
+    return array;
+  } 
+
+  // Encontrar el punto medio del array
+  var mitad = Math.floor(array.length / 2);
+
+  // Dividir el array en dos mitades (izquierda y derecha)
+  var left = array.slice(0, mitad);
+  var right = array.slice(mitad);
+
+  // Reiniciar el array original para almacenar el resultado final
+  array = [];
+
+  // Llamar recursivamente mergeSort en las dos mitades
+  left = mergeSort(left);
+  right = mergeSort(right);
+
+  // Fusionar las dos mitades ordenadas en un solo array ordenado
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      array.push(left.shift()); // Agregar el elemento de la izquierda al array resultante
+    } else {
+      array.push(right.shift()); // Agregar el elemento de la derecha al array resultante
+    }
+  }
+
+  // Concatenar los elementos restantes (si los hay) al array resultante
+  return array.concat(left, right);
+}
+
+
+
+// No modificar nada debajo de esta línea
+// --------------------------------
+
+module.exports = {
+  quickSort,
+  mergeSort,
+};
